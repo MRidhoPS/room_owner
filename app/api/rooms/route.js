@@ -24,7 +24,7 @@ export async function GET() {
 
         console.log("userId: ", userId);
 
-        const res = await axiosInstance.get(`/admin/rooms/4`, {
+        const res = await axiosInstance.get(`/admin/rooms/${userId}`, {
             headers: {
                 Cookie: `jwt=${token}`
             },

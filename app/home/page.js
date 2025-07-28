@@ -18,8 +18,15 @@ export default function HomePage() {
         const fetchRooms = async () => {
             try {
                 const res = await fetch('/api/rooms', { method: 'GET' })
+
+
                 const json = await res.json();
-                setRooms(json.data); 
+
+                if (!json.data || json.data.length === 0) {
+                    setRooms('Empty');
+                } else {
+                    setRooms(json.data);
+                }
             } catch (err) {
                 console.error('Failed to fetch rooms:', err);
             } finally {
@@ -38,10 +45,15 @@ export default function HomePage() {
 
             <h1 className="text-xl font-bold mb-4">Daftar Rooms</h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                {rooms.map((room, index) => (
-                    <RoomCard key={index} room={room} />
-                ))}
+                {Array.isArray(rooms) && rooms.length > 0 ? (
+                    rooms.map((room, index) => (
+                        <RoomCard key={index} room={room} />
+                    ))
+                ) : (
+                    <p className="text-gray-500">Tidak ada ruangan tersedia.</p>
+                )}
             </div>
+
         </div>
     );
 }
