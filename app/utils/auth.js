@@ -1,5 +1,6 @@
 import axiosInstace from './axiosInstance'
 
+
 export async function loginUser(email, password) {
     try {
         const res = await axiosInstace.post(`/auth/login`, {
@@ -31,9 +32,9 @@ export async function loginUser(email, password) {
 }
 
 
-export function logout(router){
+export async function logout(router){
     try {
-        localStorage.removeItem('token');
+        await fetch('/api/logout', {method: 'POST'})
         router.push('/login');
     } catch (error) {
         console.log(error);
