@@ -9,13 +9,13 @@ export async function GET() {
         const cookie = await cookies();
         const token = cookie.get('jwt')?.value;
 
-        console.log("token: ", token);
+        // console.log("token: ", token);
 
         if (!token) {
             return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
         }
 
-        console.log('JWT_SECRET', process.env.JWT_SECRET);
+        // console.log('JWT_SECRET', process.env.JWT_SECRET);
 
 
         const { payload } = await jwtVerify(token, new TextEncoder().encode(process.env.JWT_SECRET));
@@ -30,8 +30,6 @@ export async function GET() {
             },
             withCredentials: true
         });
-        console.log(res.data);
-
 
         return NextResponse.json(res.data);
     } catch (error) {

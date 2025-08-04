@@ -43,7 +43,9 @@ export default function HomePage() {
         <div className="p-4">
             <button onClick={() => logout(router)}>Logout</button>
 
-            <h1 className="text-xl font-bold mb-4">Daftar Rooms</h1>
+            <h1 className="text-xl font-bold mb-4">List Rooms</h1>
+            <Link className='text-xl font-bold mb-4 text-green-600' href={'/add'}>Add Rooms</Link>
+
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                 {Array.isArray(rooms) && rooms.length > 0 ? (
                     rooms.map((room, index) => (
