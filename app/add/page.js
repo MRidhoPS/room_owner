@@ -43,7 +43,7 @@ export default function AddPage() {
 
     return (
         <div className='flex flex-col p-7'>
-            <h1>Add Room</h1>
+            <h1 className='font-bold text-2xl'>Create Room</h1>
 
             <form onSubmit={handleSubmit} className='flex flex-col gap-3 mt-5'>
                 <div>
