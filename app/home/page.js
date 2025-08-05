@@ -22,6 +22,8 @@ export default function HomePage() {
 
                 const json = await res.json();
 
+                console.log(json.data);
+
                 if (!json.data || json.data.length === 0) {
                     setRooms('Empty');
                 } else {
@@ -46,7 +48,7 @@ export default function HomePage() {
             <h1 className="text-xl font-bold mb-4">List Rooms</h1>
             <Link className='text-xl font-bold mb-4 text-green-600' href={'/add'}>Add Rooms</Link>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                 {Array.isArray(rooms) && rooms.length > 0 ? (
                     rooms.map((room, index) => (
                         <RoomCard key={index} room={room} />
@@ -54,6 +56,11 @@ export default function HomePage() {
                 ) : (
                     <p className="text-gray-500">Tidak ada ruangan tersedia.</p>
                 )}
+            </div> */}
+            <div className='flex flex-col gap-4'>
+                {Array.isArray(rooms) && rooms.length > 0 ? (rooms.map((room, index) => (
+                    <RoomCard key={index} room={room} />
+                ))) : (<p className="text-gray-500">Tidak ada ruangan tersedia.</p>)}
             </div>
 
         </div>
