@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import Slider from 'react-slick';
@@ -51,34 +52,51 @@ export default function DetailRooms() {
     if (rooms === 'Empty') return <p>Data not found.</p>;
 
     return (
-        <div>
-            <h1>{rooms.name}</h1>
-            <h2>{rooms.description}</h2>
-            <h3>{rooms.capacity}</h3>
-            <h4>{rooms.hourly_price}</h4>
-
-            <div>
-                <p>Facilities: </p>
-                {(rooms.facilities || []).map((facility, index)=>(
-                    <div key={index}>
-                        <p>{facility}</p>
-                    </div>
-                ))}
-            </div>
-
-            <div className="w-1/2">
-                <Slider {...settings}>
+        <div className='flex flex-col w-full p-10'>
+            <Link href={'/home'} replace>Home</Link>
+            <div className="">
+                {(rooms.photos.length == 0 ? <p className='pl-2'>Empty photos</p> : <Slider {...settings}>
                     {(rooms.photos || []).map((photo, index) => (
                         <div key={index} className="px-2">
                             <img
                                 src={photo}
                                 alt={`Room photo ${index + 1}`}
-                                className="w-full h-48 object-cover rounded-lg shadow"
+                                className="w-full h-100 object-fill rounded-lg shadow"
                             />
                         </div>
                     ))}
-                </Slider>
+                </Slider>)}
             </div>
+            <div className='p-2 flex flex-col gap-2'>
+                <h1 className='pt-10 font-bold uppercase text-2xl pb-2'>{rooms.name}</h1>
+                <div>
+                    <p className='text-gray-500'>Description:</p>
+                    <h2>{rooms.description}</h2>
+                </div>
+                <div>
+                    <p className='text-gray-500'>Room Capacity:</p>
+                    <h3>{rooms.capacity} Persons</h3>
+                </div>
+                <div>
+                    <p className='text-gray-500'>Hourly Price:</p>
+                    <h4 className="text-gray-600">Rp {Number(rooms.hourly_price).toLocaleString('id-ID')} / hour</h4>
+                </div>
+
+                <div>
+                    <p className='text-gray-500'>Facilities: </p>
+                    {(rooms.facilities.length == 0 ? <p>Empty Facilities</p> : <div>  {(rooms.facilities || []).map((facility, index) => (
+                        <div key={index}>
+                            <p>{index + 1}. {facility}</p>
+                        </div>
+                    ))}</div>)}
+                </div>
+
+                <div className='flex w-full h-12 rounded-2xl bg-green-600 hover:bg-green-400 transition delay-75 items-center justify-center'>
+                    <Link href={`/room/edit/${rooms.id}`} className='text-center text-white'>Edit Room</Link>
+                </div>
+            </div>
+
+
         </div>
     );
 }

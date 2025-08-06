@@ -19,7 +19,7 @@ export default function RoomCard({ room }) {
                 <div className='flex flex-row max-w-full p-5 gap-5'>
 
                     <div className='bg-green-600 w-40  rounded-md text-center p-2 text-white hover:bg-green-400'>
-                        <Link href={`/room/${room.id}`} key={room.id}>Edit</Link>
+                        <Link href={`/room/${room.id}`} key={room.id}>Detailed</Link>
                     </div>
                     <div className='bg-red-600 w-40  rounded-md text-center p-2 text-white hover:bg-red-400'>
                         <p>Delete</p>

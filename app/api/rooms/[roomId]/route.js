@@ -4,7 +4,9 @@ import { NextResponse } from "next/server";
 import axiosInstance from '@/app/utils/axiosInstance';
 
 export async function GET(req, { params }) {
-    const roomId = params.roomId;
+
+    const context = await params;
+    const roomId = context.roomId;
     try {
         const cookie = await cookies();
         const token = cookie.get('jwt')?.value;
@@ -24,7 +26,7 @@ export async function GET(req, { params }) {
             withCredentials: true
         })
 
-        console.log(res.data);
+        // console.log(res.data);
         return NextResponse.json(res.data);
     } catch (error) {
         console.error(error);
