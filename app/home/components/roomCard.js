@@ -1,7 +1,31 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
-export default function RoomCard({ room }) {
+export default function RoomCard({ room, onDelete }) {
+
+    const router = useRouter();
+
+    const deleteRoom = async (e) => {
+        e.preventDefault();
+
+        try {
+            const res = await fetch(`/api/rooms/${room.id}`, {
+                method: 'DELETE',
+            });
+
+            const data = await res.json();
+            console.log(data);
+            onDelete()
+        } catch (error) {
+            console.error('Error deleting room:', error);
+        } finally {
+            router.replace('/home');
+            router.refresh();
+        }
+    };
+
+
     return (
         <div className="rounded-lg shadow-xl max-w-full flex flex-row">
             <img
@@ -21,9 +45,12 @@ export default function RoomCard({ room }) {
                     <div className='bg-green-600 w-40  rounded-md text-center p-2 text-white hover:bg-green-400'>
                         <Link href={`/room/${room.id}`} key={room.id}>Detailed</Link>
                     </div>
-                    <div className='bg-red-600 w-40  rounded-md text-center p-2 text-white hover:bg-red-400'>
-                        <p>Delete</p>
-                    </div>
+                    <button
+                        type='submit'
+                        onClick={deleteRoom}
+                        className='bg-red-600 w-40  rounded-md text-center p-2 text-white hover:bg-red-400'>
+                        Delete
+                    </button>
 
                 </div>
             </div>

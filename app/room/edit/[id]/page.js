@@ -40,7 +40,7 @@ export default function EditPage() {
             const data = await res.json();
             console.log(data);
         } catch (error) {
-            console.error('Error adding room:', error);
+            console.error('Error edit room:', error);
         } finally {
             setLoading(false);
             router.replace(`/room/${id}`);

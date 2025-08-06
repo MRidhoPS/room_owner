@@ -3,6 +3,36 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import axiosInstance from '@/app/utils/axiosInstance';
 
+export async function DELETE(req, { params }) {
+    try {
+        const context = await params;
+        const id = context.roomId;
+
+        const cookie = await cookies();
+        const token = cookie.get('jwt')?.value;
+
+
+        if (!token) {
+            return NextResponse.json({
+                message: 'Unauthorized'
+            }, { status: 401 });
+        }
+
+        const res = await axiosInstance.delete(`/admin/rooms/${id}`, {
+            headers: {
+                Cookie: `jwt=${token}`,
+            },
+            withCredentials: true,
+        });
+        return NextResponse.json(res.data);
+    } catch (error) {
+        return NextResponse.json(
+            { message: 'Failed to delete rooms' },
+            { status: 500 }
+        );
+    }
+}
+
 export async function GET(req, { params }) {
 
     const context = await params;

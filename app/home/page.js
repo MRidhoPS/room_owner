@@ -14,28 +14,28 @@ export default function HomePage() {
     const [rooms, setRooms] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const fetchRooms = async () => {
-            try {
-                const res = await fetch('/api/rooms', { method: 'GET' })
+    const fetchRooms = async () => {
+        try {
+            const res = await fetch('/api/rooms', { method: 'GET' })
 
 
-                const json = await res.json();
+            const json = await res.json();
 
-                console.log(json.data);
+            console.log(json.data);
 
-                if (!json.data || json.data.length === 0) {
-                    setRooms('Empty');
-                } else {
-                    setRooms(json.data);
-                }
-            } catch (err) {
-                console.error('Failed to fetch rooms:', err);
-            } finally {
-                setLoading(false);
+            if (!json.data || json.data.length === 0) {
+                setRooms('Empty');
+            } else {
+                setRooms(json.data);
             }
-        };
+        } catch (err) {
+            console.error('Failed to fetch rooms:', err);
+        } finally {
+            setLoading(false);
+        }
+    }
 
+    useEffect(() => {
         fetchRooms();
     }, []);
 
@@ -47,19 +47,9 @@ export default function HomePage() {
 
             <h1 className="text-xl font-bold mb-4">List Rooms</h1>
             <Link className='text-xl font-bold mb-4 text-green-600' href={'/add'}>Add Rooms</Link>
-
-            {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                {Array.isArray(rooms) && rooms.length > 0 ? (
-                    rooms.map((room, index) => (
-                        <RoomCard key={index} room={room} />
-                    ))
-                ) : (
-                    <p className="text-gray-500">Tidak ada ruangan tersedia.</p>
-                )}
-            </div> */}
             <div className='flex flex-col gap-4'>
                 {Array.isArray(rooms) && rooms.length > 0 ? (rooms.map((room, index) => (
-                    <RoomCard key={index} room={room} />
+                    <RoomCard key={index} room={room} onDelete={fetchRooms} />
                 ))) : (<p className="text-gray-500">Tidak ada ruangan tersedia.</p>)}
             </div>
 

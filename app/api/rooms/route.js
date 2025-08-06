@@ -5,8 +5,9 @@ import { jwtVerify } from "jose"
 import axios from "axios";
 
 
+
+
 export async function PUT(req) {
-    // const roomId = params.roomId;
     try {
         const cookie = await cookies();
         const token = cookie.get('jwt')?.value;
@@ -40,7 +41,7 @@ export async function PUT(req) {
             },
             withCredentials: true
         });
-        
+
         console.log("update res: ", res.data)
 
         return NextResponse.json(res.data);
